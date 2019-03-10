@@ -19,6 +19,8 @@ Route::get('hello/:name', 'index/hello');
 Route::get('article/:id', 'index/Article/read');
 // 新建路由规则 标签
 Route::get('tag/:id', 'index/Tag/index');
+// 新建路由规则 标签
+Route::get('index/:page', 'index/index/index');
 
 return [
 

@@ -234,7 +234,7 @@ article { width: 1140px; margin: 100px auto 0; overflow: hidden }
     main .sidebar .rank:hover ::after { width: 70%;}
     main .sidebar .rank ul { background-color: #FFF; }
     main .sidebar .rank ul li { margin: 0 0 20px 0; overflow: hidden }
-    main .sidebar .rank ul li p { line-height: 24px; color: #888; font-size: 15px; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 2; }
+    main .sidebar .rank ul li p { max-height: 48px; line-height: 24px; color: #888; font-size: 15px; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 2; }
     main .sidebar .rank ul li a { color: #48494d; }
     main .sidebar .rank ul li a:hover { color: #00A7EB; }
     main .sidebar .rank ul i { width: 100px; height: 75px; overflow: hidden; display: block; border: #efefef 1px solid; float: left; margin-right: 10px }

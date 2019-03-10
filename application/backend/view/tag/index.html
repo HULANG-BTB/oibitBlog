@@ -1,0 +1,139 @@
+{extend name="public/Base"} {block name="link"} {css href="/static/Amaze/css/app.css" /} {/block} {block name="script"} {/block} {block name="body"}
+<div class="am-g g">
+    <div class="content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="panel am-cf">
+                        <div class="panel-head am-cf">
+                            <div class="panel-title am-cf">
+                                文章列表
+                            </div>
+                        </div>
+                        <div class="panel-body am-fr">
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" class="am-btn am-btn-default am-btn-success" id="Add">
+                                                <span class="am-icon-plus"></span> 新增
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped table-black">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>标签名称</th>
+                                        <th>创建时间</th>
+                                        <th>修改时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+{volist name="tags" id="tag"}
+                                    <tr class="gradeX">
+                                        <td class="am-text-middle">{$tag.id}</td>
+                                        <td class="am-text-middle">{$tag.name}</td>
+                                        <td class="am-text-middle">{$tag.create_at}</td>
+                                        <td class="am-text-middle">{$tag.update_at}</td>
+                                        <td class="am-text-middle">
+                                            <div class="table-black-operation">
+                                                <a href="javascript:edit({$tag.id}, '{$tag.name}');"><i class="am-icon-pencil"></i> 编辑</a> <a href="javascript:del({$tag.id});" class="table-black-operation-del"><i class="am-icon-trash"></i> 删除</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+{/volist}
+                                    <!-- more data -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination pagination">
+                                        <li class="am-disabled">
+                                            <a href="#">«</a>
+                                        </li>
+                                        <li class="am-active">
+                                            <a href="#">1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">4</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">»</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="thisJs"}
+{load href="/static/Amaze/js/app.js" /}
+{load href="/static/layer/layer.js" /}
+{/block}
+{block name="thisScript"}
+<script type="text/javascript">
+    $(document).on('click', '#Add', function() {
+        layer.prompt({title: '输入标签名称', formType: 3}, function(name, index){         
+          layer.close(index);
+          $.ajax({
+            url: "{:url('backend/tag/add')}",
+            method: "POST",
+            data: {name: name},
+            dataTpye: "JSON",
+            success: function(res) {
+                if (res.status) {
+                    layer.msg("添加成功");
+                    window.location.reload();
+                } else{
+                    layer.msg(res.msg);
+                }
+            }
+          });
+
+
+        });
+    });
+
+    function edit(id, name) {
+        layer.prompt({title: '输入新标签名称', formType: 3}, function(name, index) {
+            layer.close(index);
+            $.ajax({
+                url: "{:url('backend/tag/modify')}",
+                method: "POST",
+                data: {id: id,name: name},
+                dataTpye: "JSON",
+                success: function(res) {
+                    if (res.status) {
+                        layer.msg("修改成功");
+                        window.location.reload();
+                    } else{
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+        });
+    }
+
+</script>
+{/block}
+</div>

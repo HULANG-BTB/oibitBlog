@@ -1,0 +1,18 @@
+      <div class="row">
+        <div class="nav">
+          <div class="menu">
+            <h1 class="logo"><a href="#" data-hover="LangHu's Blog">LangHu's Blog</a><div class="icon icon-out"><span></span><span></span></div></h1>
+            <div class="search">
+              <input type="text" name="keywords" placeholder="Search...">
+              <span class="search"></span>
+            </div>
+            <ul>
+{volist name="navBar" id="navBar"}
+              <li><a href="{$navBar.url}" data-hover="{$navBar.name}" {if $navBar.open_type eq 1}target="_blank"{/if}>{$navBar.name}</a></li>
+              <li><a href="{$navBar.url}" data-hover="{$navBar.name}" {if $navBar.open_type eq 1}target="_blank"{/if}>{$navBar.name}</a></li>
+              <li><a href="{$navBar.url}" data-hover="{$navBar.name}" {if $navBar.open_type eq 1}target="_blank"{/if}>{$navBar.name}</a></li>
+{/volist}
+            </ul>
+          </div>
+        </div>
+      </div>

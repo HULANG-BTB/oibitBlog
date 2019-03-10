@@ -1,0 +1,143 @@
+{extend name="public/Base"}
+{block name="seo"}
+    <title>{$title|default='页面标题'}</title>
+    <meta name="keyword" content="{$keyword|default='页面关键字'}">
+    <meta name="description" content="{$description|default='页面描述'}">
+{/block}
+{block name="link"}
+    <!-- Share Style -->
+    {css href="/static/plugins/share/css/share.min.css"}
+    <!-- MdEditor Style -->
+    {css href="/static/mdeditor/css/editormd.css"}
+{/block}
+{block name="script"}
+
+{/block}
+{block name="body"}
+<div class="container">
+    <!-- 导航开始 -->
+    <header>
+        {include file="public/Header"}
+    </header>
+    <!-- 导航结束 -->
+    <!-- 内容开始 -->
+    <main>
+        <!-- 文章列表开始 -->
+        <div class="article">
+            <div class="content">
+                <div class="blogbox">
+                    <h3 class="title">{$article.title}</h3>
+                    <div class="info">
+                        <ul>
+                            <li><i class="glyphicon glyphicon-user"></i> {$article.username}</li>
+                            <li><i class="glyphicon glyphicon-th-list"></i> {$category.name}</li>
+                            <li><i class="glyphicon glyphicon-time"></i> {$article.create_at}</li>
+                            <li><i class="glyphicon glyphicon-eye-open"></i> {$article.view_count}</li>
+                            <li><i class="glyphicon glyphicon-comment"></i> {$article.comment_count}</li>
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+{volist name="thistags" id="tag"}
+                            <li><a href="{:url('index/tag/index', ['id' => $tag.id])}">{$tag.name}</a></li>
+{/volist}
+                        </ul>
+                    </div>
+                    <div class="body" id="doc-content">
+                        <textarea style="display: none;">{$article.content}</textarea>
+                    </div>
+                    <div class="share">
+                        <div class="social-share-cs">
+                            <span> 分享到： </span>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <p>暂时还没有评论啊。。。。。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 文章列表结束 -->
+        <!-- 侧边栏开始 -->
+        <div class="sidebar">
+            <!-- 排行开始  -->
+            <div class="rank">
+              <h2 class="title">浏览排行</h2>
+           	  <ul>
+{volist name="view" id="view"}
+                <li>
+                  <i><img src="{$view.thumbnail}"></i>
+                  <p><a href="{:url('index/article/read', ['id'=> $view.id])}">{$view.title}</a></p>
+                  <span class="glyphicon glyphicon-time"> {$view.create_at}</span>
+                </li>
+{/volist}
+              </ul>
+            </div>
+            <!-- 排行结束 -->
+            <!-- 分类开始 -->
+            <div class="tags">
+                <h2 class="title">标签列表</h2>
+                <ul>
+                    {volist name="tags" id="tag"}
+                    <li><a href="{:url("index/tag/index", ["id" => $tag.id])}">{$tag.name}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <!-- 分类结束 -->
+            <!-- 捐赠开始 -->
+            <div class="donation">
+                <h2 class="title">赞助一下</h2>
+                <ul>
+                    <li class="wx"><img src="/static/app/img/alipay.jpg"></li>
+                </ul>
+            </div>
+            <!-- 捐赠结束 -->
+        </div>
+        <!-- 侧边栏结束 -->
+    </main>
+    <!-- 内容结束 -->
+    <footer>
+        {include file="public/Footer"}
+    </footer>
+    <a href="#" class="top">Top</a>
+    <!-- 底部结束 -->
+</div>
+{/block}
+{block name="plugins"}
+    {js href="/static/app/js/jquery.min.js"}
+    {js href="/static/plugins/bootstrap/js/bootstrap.min.js"}
+    {js href="/static/plugins/fullscreen/jquery.fullscreen.js"}
+    <!-- MdEditor Js -->
+    {js href="/static/mdeditor/lib/marked.min.js"}
+    {js href="/static/mdeditor/lib/prettify.min.js"}
+    {js href="/static/mdeditor/lib/raphael.min.js"}
+    {js href="/static/mdeditor/lib/underscore.min.js"}
+    {js href="/static/mdeditor/lib/sequence-diagram.min.js"}
+    {js href="/static/mdeditor/lib/flowchart.min.js"}
+    {js href="/static/mdeditor/lib/jquery.flowchart.min.js"}
+    {js href="/static/mdeditor/editormd.min.js"}
+{/block}
+{block name="thisJs"}
+<script src="/static/plugins/share/js/social-share.min.js"></script>
+<script src="/static/app/js/base.js"></script>
+<script>
+    // share
+    var config = {
+        title: '234',
+        description: '123',
+        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字,
+        wechatQrcodeHelper: '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>',
+    };
+    socialShare('.social-share-cs', config);
+
+    testEditormdView2 = editormd.markdownToHTML("doc-content", {
+        htmlDecode      : "style,script,iframe",  // you can filter tags decode
+        emoji           : true,
+        taskList        : true,
+        tex             : true,  // 默认不解析
+        flowChart       : true,  // 默认不解析
+        sequenceDiagram : true,  // 默认不解析
+    });
+
+</script>
+{/block}

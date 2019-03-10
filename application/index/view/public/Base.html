@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- 页面META -->
+{include file="public/Meta"}
+    <!-- 页面SEO -->
+{block name="seo"}{/block}
+{include file="public/Link"}
+    <!-- 用户自定义css样式 -->
+{block name="link"}{/block}
+    <!-- 全局JS脚本 -->
+{include file="public/Script"}
+    <!-- 用户自定义全局JS -->
+{block name="script"} {/block}
+  </head>
+  <body>
+    <!-- 页面主体内容 -->
+{block name="body"}{/block}
+    <!-- 第三方JS插件 -->
+{block name="plugins"}{/block}
+    <!-- 用户自定义JS脚本 -->
+{block name="thisJs"}{/block}
+  </body>
+</html>

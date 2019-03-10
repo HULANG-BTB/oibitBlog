@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>首页</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap Style -->
+  <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/css/bootstrap.min.css">
+  <!-- App Style -->
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+  <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+  <!--[if lt IE 9]>
+    <script src="./plugins/html5shiv/html5shiv.js"></script>
+    <script src="./plugins/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container">
+    <!-- 导航开始 -->
+    <header>
+      <div class="row">
+        <div class="nav">
+          <div class="menu">
+            <h1 class="logo"><a href="#" data-hover="LangHu's Blog">LangHu's Blog</a><div class="icon icon-out"><span></span><span></span></div></h1>
+            <div class="search">
+              <input type="text" name="keywords" placeholder="Search...">
+              <span class="search"></span>
+            </div>
+            <ul>
+              <li><a class="active" href="index.html" data-hover="首页">首页</a></li>
+              <li><a href="404.html" data-hover="分类">分类</a></li>
+              <li><a href="#" data-hover="标签">标签</a></li>
+              <li><a href="timeline.html" data-hover="时间轴">时间轴</a></li>
+              <li><a href="about.html" data-hover="关于">关于</a></li>
+              <li><a href="connect.html" data-hover="联系">联系</a></li>
+              <li><a href="pay.html" data-hover="打赏">打赏</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- 导航结束 -->
+    <!-- 内容开始 -->
+    <main>
+      <!-- 文章列表开始 -->
+      <div class="login">
+        <div class="login-box">
+          <div class="title">Login For Admin</div>
+          <form>
+            <input type="text" name="userid" value="USERNAME" >
+            <input type="password" name="psw" value="PASSWORD" >
+            <div class="button">
+              <input type="submit" class="sign-in" value="Sign In">
+              <input type="reset" class="reset" value="Reset">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- 文章列表结束 -->
+    </main>
+    <!-- 底部开始 -->
+    <footer>
+      <p>Powered By <a href="#" data-hover="LangHu">LangHu</a></p>
+    </footer>
+    <a href="#" class="top">Top</a>
+    <!-- 底部结束 -->
+  </div>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./plugins/scrollreveal/scrollreveal.js"></script>
+  <script src="./plugins/share/js/social-share.min.js"></script>
+  <script src="./plugins/highlight/highlight.pack.js"></script>
+  <script src="./plugins/JQueryPage/Paging.js"></script>
+  <script src="./plugins/fullscreen/jquery.fullscreen.js"></script>
+  <script src="./js/base.js"></script>
+  <script type="text/javascript">
+    // 分页效果
+    $('.page').paging({
+        initPageNo: 1, // 初始页码
+        totalPages: 200, //总页数
+        slideSpeed: 600, // 缓动速度。单位毫秒
+        callback: function(page) { // 回调函数
+            window.location.href = "?page=" + page;
+        }
+    });
+    
+  </script>
+</body>
+</html>

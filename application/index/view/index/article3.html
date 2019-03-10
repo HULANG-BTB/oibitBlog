@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JQuery实现网页全屏</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap Style -->
+  <link rel="stylesheet" type="text/css" href="./plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Share Style -->
+  <link rel="stylesheet" type="text/css" href="./plugins/share/css/share.min.css">
+  <!-- HighLight Style -->
+  <link rel="stylesheet" type="text/css" href="./plugins/highlight/styles/vs2015.css">
+  <!-- App Style -->
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+  <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+  <!--[if lt IE 9]>
+    <script src="./plugins/html5shiv/html5shiv.js"></script>
+    <script src="./plugins/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container">
+    <!-- 导航开始 -->
+    <header>
+      <div class="row">
+        <div class="nav">
+          <div class="menu">
+            <h1 class="logo"><a href="#" data-hover="LangHu's Blog">LangHu's Blog</a><div class="icon icon-out"><span></span><span></span></div></h1>
+            <ul>
+              <li><a href="index.html" data-hover="首页">首页</a></li>
+              <li><a href="#" data-hover="分类">分类</a></li>
+              <li><a href="#" data-hover="标签">标签</a></li>
+              <li><a href="#" data-hover="时间轴">时间轴</a></li>
+              <li><a href="about.html" data-hover="关于">关于</a></li>
+              <li><a href="connect.html" data-hover="联系">联系</a></li>
+              <li><a href="pay.html" data-hover="打赏">打赏</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- 导航结束 -->
+    <!-- 内容开始 -->
+    <main>
+      <!-- 文章列表开始 -->
+      <div class="article">
+        <div class="content">
+          <div class="blogbox">
+            <h3 class="title">JQuery实现网页全屏</h3>
+            <div class="info">
+              <ul>
+                <li><i class="glyphicon glyphicon-user"></i> 作者</li>
+                <li><i class="glyphicon glyphicon-th-list"></i> 分类</li>
+                <li><i class="glyphicon glyphicon-time"></i> 时间</li>
+                <li><i class="glyphicon glyphicon-eye-open"></i> 查看数目</li>
+                <li><i class="glyphicon glyphicon-comment"></i> 评论人数</li>
+              </ul>
+            </div>
+            <div class="tags">
+              <ul>
+                <li><a href="">JQuery</a></li>
+                <li><a href="">Html</a></li>
+              </ul>
+            </div>
+            <div class="body">
+<h3>本内容分享本站的全屏实现</h3>
+<ul>
+<li><p>JS文件代码</p>
+<pre><code class="lang-javascript">(function($){
+  "use strict";
+
+  function supportFullScreen(){
+      var doc = document.documentElement;
+      return ('requestFullscreen' in doc) || ('mozRequestFullScreen' in doc &amp;&amp; document.mozFullScreenEnabled) || ('webkitRequestFullScreen' in doc);
+  }
+
+  function requestFullScreen(elem){
+      if(elem.requestFullscreen) {
+          elem.requestFullscreen();
+      } else if(elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen();
+      } else if(elem.msRequestFullscreen){ 
+          elem.msRequestFullscreen();  
+      } else if(elem.oRequestFullscreen){
+          elem.oRequestFullscreen();
+      } else if(elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+      } /*else {
+          var  cssText = 'width:100%;height:100%;overflow:hidden;';
+          document.documentElement.style.cssText = cssText;
+          document.body.style.cssText = cssText;
+          elem.style.cssText = cssText+';'+'margin:0px;padding:0px;';
+          document.IsFullScreen = true;
+      }*/
+  }
+
+  function fullScreenStatus(){
+      return document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen || false;
+  }
+
+  function cancelFullScreen(){
+      if (document.exitFullscreen) {
+          document.exitFullscreen();
+      } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+      } else if(document.oRequestFullscreen) {
+          document.oCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+         } /*else {
+          var docHtml  = document.documentElement;
+          var docBody  = document.body;
+          var videobox  = document.getElementById('videobox');
+          docHtml.style.cssText = "";
+          docBody.style.cssText = "";
+          videobox.style.cssText = "";
+          document.IsFullScreen = false;
+      }*/
+  }
+
+  function onFullScreenEvent(callback){
+      $(document).on("fullscreenchange mozfullscreenchange webkitfullscreenchange", function(){
+          callback(fullScreenStatus());
+      });
+  }
+
+  $.support.fullscreen = supportFullScreen();
+
+  $.fn.fullScreen = function(props){
+      if(!$.support.fullscreen || this.length !== 1) {
+          return this;
+      }
+
+      if(fullScreenStatus()){
+          cancelFullScreen();
+          return this;
+      }
+
+      var options = $.extend({
+          'background'      : '#111',
+          'callback'        : $.noop( ),
+          'fullscreenClass' : 'fullScreen'
+      }, props),
+
+      elem = this,
+
+      fs = $('&lt;div&gt;', {
+          'css' : {
+              'overflow-y' : 'auto',
+              'background' : options.background,
+              'width'      : '100%',
+              'height'     : '100%'
+          }
+      }).insertBefore(elem).append(elem);
+
+      elem.addClass( options.fullscreenClass );
+
+      requestFullScreen(fs.get(0));
+
+      fs.click(function(e){
+          if(e.target == this){
+              cancelFullScreen();
+          }
+      });
+
+      elem.cancel = function(){
+          cancelFullScreen();
+          return elem;
+      };
+
+      onFullScreenEvent(function(fullScreen){
+          if(!fullScreen){
+              $(document).off( 'fullscreenchange mozfullscreenchange webkitfullscreenchange' );
+              elem.removeClass( options.fullscreenClass ).insertBefore(fs);
+              fs.remove();
+          }
+
+          if(options.callback) {
+              options.callback(fullScreen);
+          }
+      });
+      return elem;
+  };
+
+  $.fn.cancelFullScreen = function( ) {
+          cancelFullScreen();
+          return this;
+  };
+}(jQuery));</code></pre>
+</li>
+<li>初始化代码<pre><code class="lang-javascript">$("elem").click(function() {
+  $('.container').fullScreen();
+});</code></pre>
+<h1>保存为对应的js文件，在页面中直接调用就可以了。注意，需要jquery支持</h1>
+</li>
+</ul>
+            </div>
+            <div class="share">
+              <div class="social-share-cs">
+                <span> 分享到： </span>
+              </div>
+            </div>
+            <div class="comment">
+              <p>暂时还没有评论啊。。。。。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 文章列表结束 -->
+      <!-- 侧边栏开始 -->
+      <div class="sidebar">
+        <!-- 排行开始  -->
+        <div class="rank">
+          <h2 class="title">浏览排行</h2>
+          <ul>
+            <li>
+              <i><img src="./img/logo.png"></i>
+              <p><a href="">制作QQ微信支付宝三合一</a></p>
+              <span class="glyphicon glyphicon-time"> 时间</span>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <i><img src="./img/logo.png"></i>
+              <p><a href="">内容</a></p>
+              <span class="glyphicon glyphicon-time"> 时间</span>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <i><img src="./img/logo.png"></i>
+              <p><a href="">内容</a></p>
+              <span class="glyphicon glyphicon-time"> 时间</span>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <i><img src="./img/logo.png"></i>
+              <p><a href="">内容</a></p>
+              <span class="glyphicon glyphicon-time"> 时间</span>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <i><img src="./img/logo.png"></i>
+              <p><a href="">内容</a></p>
+              <span class="glyphicon glyphicon-time"> 时间</span>
+            </li>
+          </ul>
+        </div>
+        <!-- 排行结束 -->
+        <!-- 分类开始 -->
+        <div class="tags">
+          <h2 class="title">标签列表</h2>
+          <ul>
+            <li><a href="">分类1</a></li>
+            <li><a href="">分类2</a></li>
+            <li><a href="">分类3</a></li>
+            <li><a href="">分类4</a></li>
+            <li><a href="">分类5</a></li>
+            <li><a href="">分类6</a></li>
+          </ul>
+        </div>
+        <!-- 分类结束 -->
+        <!-- 捐赠开始 -->
+        <div class="donation">
+          <h2 class="title">赞助一下</h2>
+          <ul>
+            <li class="wx"><img src="./img/alipay.jpg"></li>
+          </ul>
+        </div>
+        <!-- 捐赠结束 -->
+      </div>
+      <!-- 侧边栏结束 -->
+    </main>
+    <!-- 底部开始 -->
+    <footer>
+      <p>Powered By <a href="#" data-hover="LangHu">LangHu</a></p>
+    </footer>
+    <!-- 底部结束 -->
+  </div>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./plugins/scrollreveal/scrollreveal.js"></script>
+  <script src="./plugins/share/js/social-share.min.js"></script>
+  <script src="./plugins/highlight/highlight.pack.js"></script>
+  <script src="./plugins/fullscreen/jquery.fullscreen.js"></script>
+  <script src="./js/base.js"></script>
+</body>
+</html>

@@ -17,9 +17,7 @@ use think\facade\Validate;
 
 class Donation extends Base
 {
-    private $WeChatUrl = "wxp://f2f0GeDHoXDW71tMSX8VAdcoij-mCf1ewY51";
     private $AlipayUrl = "https://qr.alipay.com/fkx08963tuknz1ixda6hqfc";
-    private $QQUrl = "https://i.qianbao.qq.com/wallet/sqrcode.htm?m=tenpay&f=wallet&u=774023581&a=1&n=%E5%8D%8A%E6%A2%A6%E4%B8%B6%E5%8D%8A%E9%86%92%E4%B8%B6%E5%8D%8A%E6%B5%AE%E7%94%9F&ac=0D0ED7CBD09B2817C759275D14384905727BA4758E689014FFC93CB46FD7218F";
 
     public function initialize()
     {
@@ -34,10 +32,10 @@ class Donation extends Base
             return $this->redirect($this->AlipayUrl);
         }
         if ( strpos( $UserAgent,'MicroMessenger') !==false ){
-            return $this->redirect($this->WeChatUrl);
+            return $this->fetch('wx');
         }
         if ( strpos( $UserAgent,'QQ') !==false ){
-            return $this->redirect($this->QQUrl);
+            return $this->fetch('qq');
         }
         return $this->redirect('index/index/index');
     }

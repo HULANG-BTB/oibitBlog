@@ -15,9 +15,10 @@ Route::get('think', function () {
 
 Route::get('hello/:name', 'index/hello');
 
-// 新建路由规则
+// 新建路由规则 文章
 Route::get('article/:id', 'index/Article/read');
-
+// 新建路由规则 标签
+Route::get('tag/:id', 'index/Tag/index');
 
 return [
 

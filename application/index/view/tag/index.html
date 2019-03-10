@@ -1,0 +1,125 @@
+{extend name="public/Base"}
+{block name="seo"}
+    <title>{$title|default='页面标题'}</title>
+    <meta name="keyword" content="{$keyword|default='页面关键字'}">
+    <meta name="description" content="{$description|default='页面描述'}">
+{/block}
+{block name="link"}
+{/block}
+{block name="script"}
+{/block}
+{block name="body"}
+    <div class="container">
+      <!-- 导航开始 -->
+      <header>
+{include file="public/Header"}
+      </header>
+      <!-- 导航结束 -->
+      <!-- 内容开始 -->
+      <main>
+      <!-- 文章列表开始 -->
+        <div class="article">
+          <!-- 列表开始 -->
+{volist name="articles" id="article"}
+            <div class="blog">
+                <h3 class="blogtitle"><a href="{:url('index/article/read', ['id'=> $article.id])}" data-hover="{$article.title}" target="_blank">{$article.title}</a></h3>
+                <span class="blogpic"><a href="{:url('index/article/read', ['id'=> $article.id])}" target="_blank"><img src="{$article.thumbnail}"/></a></span>
+                <p class="blogtext"><a href="{:url('index/article/read', ['id'=> $article.id])}" target="_blank">{$article.abstract}</a></p>
+                <div class="bloginfo">
+                    <ul>
+                        <li class="author"><i class="glyphicon glyphicon-user"></i> {$article.username}</li>
+                        <li class="category"><i class="glyphicon glyphicon-th-list"></i> {$article.category}</li>
+                        <li class="time"><i class="glyphicon glyphicon-time"></i> {$article.create_at}</li>
+                        <li class="view"><i class="glyphicon glyphicon-eye-open"></i> {$article.view_count}</li>
+                        <li class="comment"><i class="glyphicon glyphicon-comment"></i> {$article.comment_count}</li>
+                    </ul>
+                </div>
+            </div>
+{/volist}
+          <!-- 列表结束 -->
+          <!-- 分页开始 -->
+          <div class="page">
+          </div>
+          <!-- 分页结束 -->
+        </div>
+        <!-- 文章列表结束 -->
+        <!-- 侧边栏开始 -->
+        <div class="sidebar">
+          <!-- 排行开始  -->
+          <div class="rank">
+            <h2 class="title">浏览排行</h2>
+            <ul>
+{volist name="view" id="view"}
+              <li>
+                <i><img src="{$view.thumbnail}"></i>
+                <p><a href="{:url('index/article/read', ['id'=> $view.id])}">{$view.title}</a></p>
+                <span class="glyphicon glyphicon-time"> {$view.create_at}</span>
+              </li>
+{/volist}
+            </ul>
+          </div>
+          <!-- 排行结束 -->
+          <!-- 分类开始 -->
+          <div class="tags">
+            <h2 class="title">标签列表</h2>
+            <ul>
+{volist name="tags" id="tag"}
+              <li><a href="{:url("index/tag/index", ["id" => $tag.id])}">{$tag.name}</a></li>
+{/volist}
+            </ul>
+          </div>
+          <!-- 分类结束 -->
+          <!-- 捐赠开始 -->
+          <div class="donation">
+            <h2 class="title">赞助一下</h2>
+            <ul>
+              <li class="wx"><img src="/static/app/img/alipay.jpg"></li>
+            </ul>
+          </div>
+          <!-- 捐赠结束 -->
+        </div>
+        <!-- 侧边栏结束 -->
+      </main>
+      <!-- 内容结束 -->
+      <footer>
+{include file="public/Footer"}
+      </footer>
+      <a href="#" class="top">Top</a>
+      <!-- 底部结束 -->
+    </div>
+{/block}
+{block name="plugins"}
+    <script src="/static/app/js/jquery.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/plugins/scrollreveal/scrollreveal.js"></script>
+    <script src="/static/plugins/fullscreen/jquery.fullscreen.js"></script>
+{/block}
+{block name="thisJs"}
+    
+    <script src="/static/plugins/share/js/social-share.min.js"></script>
+    <script src="/static/plugins/highlight/highlight.pack.js"></script>
+    <script src="/static/plugins/JQueryPage/Paging.js"></script>
+    <script src="/static/app/js/base.js"></script>
+    <script type="text/javascript">
+      // 分页效果
+      $('.page').paging({
+          initPageNo: {$page.curr}, // 初始页码
+          totalPages: {$page.all}, //总页数
+          slideSpeed: 600, // 缓动速度。单位毫秒
+          callback: function(page) { // 回调函数
+              window.location.href = "{:url('index/index/index', ['page' => 'pageNum'])}".replace('pageNum', page);
+          }
+      });
+      // 列表 滑轮fadein效果 引用js
+      var slideUp = {
+          delay: 50,
+          distance: '100%',
+          duration: 1500,
+          easing: 'ease-in-out',
+          origin: 'bottom',
+          opacity: 0,
+          reset: true,
+      };
+      ScrollReveal().reveal('.blog', slideUp);
+    </script>
+{/block}

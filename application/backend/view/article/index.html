@@ -88,7 +88,7 @@
                       <td class="am-text-middle">{$article.create_at}</td>
                       <td class="am-text-middle">
                         <div class="table-black-operation">
-                          <a href="javascript:;"><i class="am-icon-pencil"></i> 编辑</a> <a href="javascript:;" class="table-black-operation-del" data="{$article.id}"><i class="am-icon-trash"></i> 删除</a>
+                          <a href="{:url('backend/article/edit', ['id' => $article.id])}"><i class="am-icon-pencil"></i> 编辑</a> <a href="javascript:;" class="table-black-operation-del" data="{$article.id}"><i class="am-icon-trash"></i> 删除</a>
                         </div>
                       </td>
                     </tr>

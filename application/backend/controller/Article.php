@@ -130,4 +130,75 @@ class Article extends Controller
         return json($ret);
     }
 
+    public function edit() {
+        $id = $this->request->param('id/d', 0);
+        if ($id == 0)
+        {
+            return $this->error('非法操作！');
+        }
+        $article = Db::name('articles')
+            ->where(['id' => $id])
+            ->find();
+        if (!$article)
+        {
+            return $this->error('非法操作！');
+        }
+        $this->assign('article', $article);
+        $tags = Db::name("tags")
+            ->select();
+        $this->assign("tags", $tags);
+        $categorys = Db::name("category")
+            ->select();
+        $this->assign("categorys", $categorys);
+
+        $thisTags = explode("|", $article['tags_list']);
+        $thisCategory = $article['category_id'];
+        $this->assign("thisTags", $thisTags);
+        $this->assign("thisCategory", $thisCategory);
+        return $this->fetch();
+
+    }
+
+    public function update() {
+        $ret = [
+            'status' => 0,
+            'msg' => null,
+        ];
+        $id = $this->request->param('id');
+        $title = $this->request->param('title');
+        $abstract = $this->request->param('abstract');
+        $content = $this->request->param('content');
+        $tags = implode("|", $this->request->param('tags/a'));
+        $category = $this->request->param('category/d');
+        if ( strlen($abstract) == 0 ) {
+            $abstract = substr($content,0, min(510, strlen($content)));
+        }
+        $upload = new \org\Upload();
+        $upload->exts = ['jpg','gif','png','jpeg'];
+        $upload->rootPath = './uploads/Images/thumbnail/';
+        $info = $upload->uploadOne($_FILES['thumbnail']);
+
+        $data = [
+            'id' => $id,
+            'title' => $title,
+            'abstract' => $abstract,
+            'content'=> $content,
+            'tags_list' => $tags,
+            'category_id' => $category,
+        ];
+
+        if ($info) {
+            $data['thumbnail'] = "/uploads/Images/thumbnail/" . $info['savepath'] . $info['savename'];
+        }
+
+        $result = Db::name('articles')->update($data);
+
+        if ($result) {
+            $ret['status'] = 1;
+        } else {
+            $ret['msg'] = "更新文章失败！";
+        }
+        return json($ret);
+    }
+
 }

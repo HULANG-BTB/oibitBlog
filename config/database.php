@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => 'oibit_blog',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'oibit_blog',
     // 密码
-    'password'        => 'root',
+    'password'        => 'rxrCZwMxdKdBkrSE',
     // 端口
     'hostport'        => '',
     // 连接dsn

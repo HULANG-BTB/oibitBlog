@@ -338,7 +338,7 @@ article { width: 1140px; margin: 100px auto 0; overflow: hidden }
 
 
 /* Main */
-    main { width: 90%; margin: 70px auto 20px; overflow: hidden; }
+    main { width: 90%; margin: 90px auto 20px; overflow: hidden; }
 
 /* Login */
     main .login { width: 100%; float: left; overflow: hidden; }

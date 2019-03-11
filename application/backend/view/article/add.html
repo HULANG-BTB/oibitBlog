@@ -176,7 +176,12 @@
         },
         imageUpload: true,
         imageFormats : ["jpg","jpeg","gif","png","bmp","webp"],
-        imageUploadURL:"{:url('backend/article/picture')}"
+        imageUploadURL:"{:url('backend/article/picture')}",
+        onload: function() {
+            editormd.loadPlugin(this.settings.path + "../plugins/content-auto-save/content-auto-save", function() {
+                testEditor.ContentAutoSave();
+            });
+        }
     });
 </script>
 {/block}

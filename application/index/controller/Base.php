@@ -28,8 +28,8 @@ class Base extends Controller
         // 设置网页标题 并且绑定变量
         $this->webTitle = "Bit客栈";
         $this->assign('title', $this->webTitle);
-        $this->assign('keyword', $this->webKeywords);
-        $this->assign('description', $this->webDescription);
+        $this->assign('keywords', $this->webKeywords);
+        $this->assign('descriptions', $this->webDescription);
         // 获取网页导航栏 并且绑定变量
         $navBar = Db::name("navigations")
             ->where(["status" => 0])

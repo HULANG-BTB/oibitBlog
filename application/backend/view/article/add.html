@@ -178,9 +178,9 @@
         imageFormats : ["jpg","jpeg","gif","png","bmp","webp"],
         imageUploadURL:"{:url('backend/article/picture')}",
         onload: function() {
-            editormd.loadPlugin(this.settings.path + "../plugins/content-auto-save/content-auto-save", function() {
-                testEditor.ContentAutoSave();
-            });
+            this.executePlugin("ImagePasteUpload", "image-paste-upload/image-paste-upload");
+            this.executePlugin("ContentAutoSave", "content-auto-save/content-auto-save");
+            
         }
     });
 </script>

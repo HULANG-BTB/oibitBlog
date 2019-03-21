@@ -178,7 +178,11 @@
         },
         imageUpload: true,
         imageFormats : ["jpg","jpeg","gif","png","bmp","webp"],
-        imageUploadURL:"{:url('backend/article/picture')}"
+        imageUploadURL:"{:url('backend/article/picture')}",
+        onload: function() {
+            this.executePlugin("ImagePasteUpload", "image-paste-upload/image-paste-upload");
+            this.executePlugin("ContentAutoSave", "content-auto-save/content-auto-save");
+        }
     });
 </script>
 {/block}
